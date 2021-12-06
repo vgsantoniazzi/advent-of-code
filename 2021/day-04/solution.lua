@@ -118,27 +118,17 @@ content = read('input.txt')
 local chosen = split(content[1], "[%d]+")
 local boards = get_boards(content)
 local marks = get_marks(boards)
+first_winner = false
 
 for index, number in pairs(chosen) do
    mark_number(number, boards, marks)
    winner_value = check_for_winner(boards, marks)
    if winner_value then
-      print("winner!", number * winner_value)
-      break
-   end
-end
-
-local chosen = split(content[1], "[%d]+")
-local boards = get_boards(content)
-local marks = get_marks(boards)
-
-for index, number in pairs(chosen) do
-   mark_number(number, boards, marks)
-   winner_value = check_for_winner(boards, marks)
-   if winner_value then
-      if #boards == 0 then
-         print("last winner! value: ", number * winner_value)
-         print_boards(boards, marks)
+      if not first_winner then
+         first_winner = true
+         print("winner!", number * winner_value)
+      elseif #boards == 0 then
+         print("last winner!", number * winner_value)
          break
       end
    end
